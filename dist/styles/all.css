@@ -1,7 +1,30 @@
-.dragover {
-  opacity: 0.5; }
-
 #progress-indicator-modal .progress-bar {
   min-width: 3em;
   min-height: 20px;
-  transition-duration: .1s; }
+  transition: all 0s ease 0s; }
+
+header .heading {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.dragover {
+  opacity: 0.5; }
+
+.file-input-wrapper .file-input-button {
+  position: relative;
+  overflow: hidden; }
+.file-input-wrapper input[type=file] {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  background-color: transparent;
+  color: transparent; }
+.file-input-wrapper .label {
+  margin-left: 10px; }
+
+.result .btn-download {
+  margin-bottom: 20px; }
