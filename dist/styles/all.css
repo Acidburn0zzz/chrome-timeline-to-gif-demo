@@ -1,3 +1,24 @@
+/**
+  Mixin to apply pre-defined breakpoints
+  $smaller {String} media breakpoint name from predefined map
+  $bigger {String} media breakpoint name from predefined map
+
+  USAGE EXAMPLES (with variations):
+
+  @include media($smaller: 'phoneLandscape') {
+  @include media('', 'phoneLandscape') {
+    // styles to be applied for 'phoneLandscape' and smaller
+  }
+
+  @include media($bigger: 'tabletPortrait') {
+  @include media('tabletPortrait', '') {
+    // styles to be applied for 'tabletPortrait' and bigger
+  }
+  @include media('tabletPortrait', 'tabletLandscape') {
+  @include media($bigger: 'tabletPortrait', $smaller: 'tabletLandscape') {
+    // styles to be applied for tablets
+  }
+*/
 #progress-indicator-modal .progress-bar {
   min-width: 3em;
   min-height: 20px;
@@ -23,8 +44,16 @@ header .heading {
   opacity: 0;
   background-color: transparent;
   color: transparent; }
+@media only screen and (max-width: 639px) {
+  .file-input-wrapper .label-wrapper {
+    display: block; } }
 .file-input-wrapper .label {
-  margin-left: 10px; }
+  white-space: normal; }
+  @media only screen and (min-width: 640px) {
+    .file-input-wrapper .label {
+      margin-left: 10px; } }
 
 .result .btn-download {
   margin-bottom: 20px; }
+.result img {
+  max-width: 100%; }
