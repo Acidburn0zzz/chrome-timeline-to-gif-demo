@@ -1,2 +1,7 @@
 .dragover {
   opacity: 0.5; }
+
+#progress-indicator-modal .progress-bar {
+  min-width: 3em;
+  min-height: 20px;
+  transition-duration: .1s; }
