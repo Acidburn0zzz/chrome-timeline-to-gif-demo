@@ -1,4 +1,4 @@
-//! chrome-timeline-to-gif - v1.0.0 - 2015-06-24
+//! chrome-timeline-to-gif - v1.0.0 - 2015-07-10
 //! author : Sergey Gospodarets
 //! license : MIT
 //! https://github.com/malyw/chrome-timeline-to-gif
@@ -942,7 +942,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     this.options.progressIndicator.setProgress(progress);
 
     var loadedImage = loadedImages[i];
-    if (i === loadedImages.length) {
+    if (i === loadedImages.length - 1) {
         resolve();
         return;// skip the last
     }
@@ -950,6 +950,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
     var nextFrame = capturedFrames[i + 1];
     if (loadedImage.img) {
         this.screenshotToCanvas(loadedImage);
+
         var currentFrameTime = currentFrame.ts;// in microseconds
         var nextFrameTime = nextFrame.ts;// in microseconds
         this.canvasToGif(currentFrame, (nextFrameTime - currentFrameTime) / 1000);
@@ -964,7 +965,7 @@ ImagesToGif.prototype.processImage = function (data, i, resolve, reject) {
 
 /**
  * Process images with timeout to prevent blocking UI
- * @returns {Promise}
+ * @returns {{Promise}}
  */
 ImagesToGif.prototype.processImages = function (data) {
     this.options.progressIndicator.show('Encoding images to the result GIF');
@@ -1153,7 +1154,7 @@ TimelineToImages.prototype.processJSON = function (data) {
         return;
     }
     var capturedFrames = jsonData.filter(function (el) {
-        if (el['name'] === 'CaptureFrame') {
+        if (el['name'] === 'Screenshot') {
             return el;
         }
     });
@@ -1194,7 +1195,7 @@ TimelineToImages.prototype.screenshotToImg = function (screenshotData) {
 };
 
 TimelineToImages.prototype.initCanvas = function (capturedFrames, fileName) {
-    this.screenshotToImg(capturedFrames[0].args.data)
+    this.screenshotToImg(capturedFrames[0].args.snapshot)
         .then(function (imgParams) {
             this.initCanvasAndEncoder(imgParams);
             this.dataToGif(capturedFrames, fileName);
@@ -1215,7 +1216,7 @@ TimelineToImages.prototype.screenshotAsImages = function (capturedFrames) {
     var todoScreenshots = allScreenshots;
 
     capturedFrames.forEach(function (capturedFrame) {
-        if (!capturedFrame.args.data) {
+        if (!capturedFrame.args.snapshot) {
             // empty frames in timeline data?
             todoScreenshots--;
             promises.push(
@@ -1223,7 +1224,7 @@ TimelineToImages.prototype.screenshotAsImages = function (capturedFrames) {
             )
         } else {
             promises.push(
-                this.screenshotToImg(capturedFrame.args.data)
+                this.screenshotToImg(capturedFrame.args.snapshot)
                     .then(function (data) {
                         todoScreenshots--;
                         var progress = (allScreenshots - todoScreenshots) / allScreenshots * 100;

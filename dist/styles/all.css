@@ -33,7 +33,8 @@ header .heading {
 
 .file-input-wrapper .file-input-button {
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  cursor: pointer; }
 .file-input-wrapper input[type=file] {
   position: absolute;
   z-index: 2;
@@ -43,7 +44,8 @@ header .heading {
   left: 0;
   opacity: 0;
   background-color: transparent;
-  color: transparent; }
+  color: transparent;
+  cursor: pointer; }
 @media only screen and (max-width: 639px) {
   .file-input-wrapper .label-wrapper {
     display: block; } }
